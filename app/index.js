@@ -24,6 +24,10 @@ const fields = [
         value: 'assignee.login'
     },
     {
+        label: 'Created At',
+        value: 'created_at'
+    },
+    {
         label: 'Last Acivity At',
         value: 'last_activity_at'
     },
@@ -81,8 +85,7 @@ async function run(org_Name, csv_path) {
                 require("fs").appendFileSync(csv_path, `${parse(seatsData, opts)}\n`);
 
                 // pagination to get next page data
-                remainingRecs = remainingRecs - 50;
-                console.log('seatsData.length ' + seatsData.length);
+                remainingRecs = remainingRecs - seatsData.length;
                 console.log('Remaining Records ' + remainingRecs);
                 if (remainingRecs > 0) {
                     pageNo=pageNo+1;
