@@ -58,7 +58,6 @@ async function getUsage(org, pageNo) {
 async function run(org_Name, csv_path) {
 
     let addTitleRow = true;
-    let hasNextPage = false;
     let pageNo =1;
     let remainingRecs = 0;
 
@@ -82,15 +81,15 @@ async function run(org_Name, csv_path) {
                 require("fs").appendFileSync(csv_path, `${parse(seatsData, opts)}\n`);
 
                 // pagination to get next page data
-                remainingRecs = remainingRecs - seatsData.length;
+                remainingRecs = remainingRecs - 50;
+                console.log('seatsData.length ' + seatsData.length);
+                console.log('Remaining Records ' + remainingRecs);
                 if (remainingRecs > 0) {
                     pageNo=pageNo+1;
                     addTitleRow = false;
-                    hasNextPage = true;
                 }
-
             });
-        } while (hasNextPage);
+        } while (remainingRecs > 0);
     } catch (error) {
         core.setFailed(error.message);
     }
