@@ -63,8 +63,8 @@ async function run(org_Name, csv_path) {
 
         // invoke the graphql query execution
         await getUsage(org_Name).then(usageResult => {
-            console.log('Usage Result ' + usageResult);
-            let seatsData = usageResult.seats;
+            console.log('Usage Result ' + JSON.parse(usageResult));
+            let seatsData = JSON.parse(usageResult).seats;
             console.log('Seats Data ' + seatsData);
 
             if (addTitleRow) {
