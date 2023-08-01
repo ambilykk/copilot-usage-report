@@ -18,14 +18,7 @@ const csv_path = core.getInput('csv_path');
 let totalSeats = 0;
 
 // Our CSV output fields
-const fields = [{
-    label: 'Organization Name',
-    default: `${org_Name}`
-},
-{
-    label: 'Total Seats',
-    default: `${totalSeats}`
-},
+const fields = [
 {
     label: 'User',
     value: 'assignee.login'
@@ -70,7 +63,9 @@ async function run(org_Name, csv_path) {
 
         // invoke the graphql query execution
         await getUsage(org_Name).then(usageResult => {
+            console.log('Usage Result ' + usageResult);
             let seatsData = usageResult.seats;
+            console.log('Seats Data ' + seatsData);
 
             if (addTitleRow) {
                 totalSeats = usageResult.total_seats;
