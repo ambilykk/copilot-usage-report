@@ -62,13 +62,11 @@ async function run(org_Name, csv_path) {
         await makeDir(dirname(csv_path));
 
         // invoke the graphql query execution
-        await getUsage(org_Name).then(usageResult => {
-            console.log('Usage Result ' + JSON.stringify(usageResult));
-            let seatsData = JSON.stringify(usageResult).seats;
-            console.log('Seats Data ' + seatsData);
-
+        await getUsage(org_Name).then(usageResult => {           
+            let seatsData = JSON.stringify(usageResult).data.seats;
+           
             if (addTitleRow) {
-                totalSeats = usageResult.total_seats;
+                totalSeats = JSON.stringify(usageResult).data.total_seats;
                 console.log('Seat Count ' + totalSeats);
             }
 
