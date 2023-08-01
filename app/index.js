@@ -63,10 +63,10 @@ async function run(org_Name, csv_path) {
 
         // invoke the graphql query execution
         await getUsage(org_Name).then(usageResult => {           
-            let seatsData = JSON.stringify(usageResult).data.seats;
+            let seatsData = JSON.stringify(JSON.stringify(usageResult).data).seats;
            
             if (addTitleRow) {
-                totalSeats = JSON.stringify(usageResult).data.total_seats;
+                totalSeats = JSON.stringify(JSON.stringify(usageResult).data).total_seats;
                 console.log('Seat Count ' + totalSeats);
             }
 
