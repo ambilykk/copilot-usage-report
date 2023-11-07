@@ -46,7 +46,7 @@ const fields = [
     {
         label: 'Team',
         value: 'assigning_team.name'
-    },
+    }
 ];
 
 // Copilot User Management API call
