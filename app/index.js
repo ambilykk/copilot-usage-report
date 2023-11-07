@@ -28,6 +28,10 @@ const fields = [
         value: 'created_at'
     },
     {
+        label: 'Updated At',
+        value: 'updated_at'
+    },
+    {
         label: 'Last Acivity At',
         value: 'last_activity_at'
     },
@@ -38,7 +42,11 @@ const fields = [
     {
         label: 'Pending Cancellation Date',
         value: 'pending_cancellation_date'
-    }
+    },
+    {
+        label: 'Team',
+        value: 'assigning_team.name'
+    },
 ];
 
 // Copilot User Management API call

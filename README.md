@@ -56,9 +56,11 @@ Sample workflow
 Following fields are included in the Copilot Usage Report
 - User
 - Created At
+- Updated At
 - Last Acivity At
 - Last Acivity Editor
 - Pending Cancellation Date
+- Team
 
 ## Report
 Copilot usage report is added as a build artifact in the workflow. You can download the report from the workflow run page.
