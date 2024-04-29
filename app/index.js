@@ -6,6 +6,7 @@ const { parse } = require('json2csv');
 // libs for csv file creation
 const { dirname } = require("path");
 const makeDir = require("make-dir");
+const fs = require('fs');
 
 // get the octokit handle 
 const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
@@ -93,7 +94,7 @@ async function run(org_Name, file_path) {
                     const opts = { fields, "header": addTitleRow };
 
                     // append to the existing file (or create and append if needed)
-                    require("fs").appendFileSync(file_path, `${parse(seatsData, opts)}\n`);
+                    fs.appendFileSync(file_path, `${parse(seatsData, opts)}\n`);
                 } else {
                     // Export to JSON file
                     //check the file exists or not 
