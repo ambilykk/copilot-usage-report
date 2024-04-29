@@ -115,7 +115,7 @@ async function run(org_Name, file_path) {
                         //TODO: find the delta and append to existung file
                         let jsonData = JSON.parse(data); // parse the JSON data into a JavaScript array
                         jsonData = jsonData.concat(seatsData);
-                        fs.appendFileSync(file_path, JSON.stringify(seatsData, null, 2));
+                        fs.writeFileSync(file_path, JSON.stringify(jsonData, null, 2));
                     }
                 }
                 // pagination to get next page data
