@@ -17,10 +17,10 @@ Pass this token as an input to the action - GITHUB_TOKEN
 
 Include the copilot-usage-report action in your workflow. 
 
-Sample workflow
+**1. Sample workflow 1: Export to CSV**
 
 ```
-    name: Copilot Usage Report export to CSV
+    name: Copilot Usage Report export to CSV 
 
     on:
       workflow_dispatch:
@@ -35,7 +35,7 @@ Sample workflow
             with:        
             GITHUB_TOKEN: ${{secrets.ORG_TOKEN}}
             org_name: 'octodemo'
-            csv_path: data/Copilot-Usage-Report.csv
+            file_path: data/Copilot-Usage-Report.csv
         
         - name: Upload Copilot Usage Report
             uses: actions/upload-artifact@v3
@@ -44,13 +44,40 @@ Sample workflow
             path: data/Copilot-Usage-Report.csv      
 ```
 
+**1. Sample workflow 2: Export to JSON**
+
+```
+    name: Copilot Usage Report export to JSON
+
+    on:
+      workflow_dispatch:
+
+    jobs:
+      first-job:
+        runs-on: ubuntu-latest
+        
+        steps:
+        - name: Copilot usage
+            uses: ambilykk/copilot-usage-report@main
+            with:        
+            GITHUB_TOKEN: ${{secrets.ORG_TOKEN}}
+            org_name: 'octodemo'
+            file_path: data/Copilot-Usage-Report.json
+        
+        - name: Upload Copilot Usage Report
+            uses: actions/upload-artifact@v3
+            with:
+            name: Copilot Usage Report
+            path: data/Copilot-Usage-Report.json      
+```
+
 ## Parameters
 
 | Name                           | Required  | Description                                                           |
 |--------------------------------|------------|----------------------------------------------------------------------|
 | GITHUB_TOKEN                 | Yes | PAT Token for access    |
 | org_name                       | Yes | GitHub Organization Name                                      |
-| csv_path                       | Yes | CSV file path                                   |
+| file_path                       | Yes | CSV or JSON file path                                   |
 
 ## Exported Fields
 Following fields are included in the Copilot Usage Report

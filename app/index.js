@@ -13,7 +13,7 @@ const octokit = github.getOctokit(GITHUB_TOKEN);
 
 // inputs defined in action metadata file
 const org_Name = core.getInput('org_name');
-const csv_path = core.getInput('csv_path');
+const file_path = core.getInput('file_path');
 
 let totalSeats = 0;
 
@@ -67,39 +67,63 @@ async function getUsage(org, pageNo) {
 }
 
 // Extract Copilot usage data with a pagination of 50 records per page
-async function run(org_Name, csv_path) {
+async function run(org_Name, file_path) {
 
     let addTitleRow = true;
-    let pageNo =1;
+    let pageNo = 1;
     let remainingRecs = 0;
 
     try {
-        await makeDir(dirname(csv_path));
+        await makeDir(dirname(file_path));
         do {
             // invoke the graphql query execution
             await getUsage(org_Name, pageNo).then(usageResult => {
                 let seatsData = usageResult.data.seats;
 
-                if (addTitleRow) {
-                    totalSeats = usageResult.data.total_seats;
-                    console.log('Seat Count ' + totalSeats);
-                    remainingRecs = totalSeats;
-                }
+                // check whether the file extension is csv or not
+                if (file_path.endsWith('.csv')) {
 
-                // ALERT! - create our updated opts
-                const opts = { fields, "header": addTitleRow };
+                    if (addTitleRow) {
+                        totalSeats = usageResult.data.total_seats;
+                        console.log('Seat Count ' + totalSeats);
+                        remainingRecs = totalSeats;
+                    }
 
-                // append to the existing file (or create and append if needed)
-                require("fs").appendFileSync(csv_path, `${parse(seatsData, opts)}\n`);
+                    // ALERT! - create our updated opts
+                    const opts = { fields, "header": addTitleRow };
 
-                // pagination to get next page data
-                remainingRecs = remainingRecs - seatsData.length;
-                console.log('Remaining Records ' + remainingRecs);
-                if (remainingRecs > 0) {
-                    pageNo=pageNo+1;
-                    addTitleRow = false;
-                }
-            });
+                    // append to the existing file (or create and append if needed)
+                    require("fs").appendFileSync(file_path, `${parse(seatsData, opts)}\n`);
+                } else {
+                    // Export to JSON file
+                    //check the file exists or not 
+                    if (!fs.existsSync(file_path)) {
+                        // The file doesn't exist, create a new one with an empty JSON object
+                        fs.writeFileSync(file_path, JSON.stringify([], null, 2));
+                    }
+
+                    //check the file is empty or not
+                    let data = fs.readFileSync(file_path, 'utf8'); // read the file
+
+                    // file contains only [] indicating a blank file
+                    // append the entire data to the file
+                    if (data.trim() === '[]') {
+                        console.log("The JSON data array is empty.");
+                        fs.writeFileSync(file_path, JSON.stringify(seatsData, null, 2));
+                    } else {
+                        //TODO: find the delta and append to existung file
+                        let jsonData = JSON.parse(data); // parse the JSON data into a JavaScript array
+                        jsonData = jsonData.concat(seatsData);
+                        fs.writeFileSync(file_path, JSON.stringify(jsonData, null, 2));
+                    }
+                    // pagination to get next page data
+                    remainingRecs = remainingRecs - seatsData.length;
+                    console.log('Remaining Records ' + remainingRecs);
+                    if (remainingRecs > 0) {
+                        pageNo = pageNo + 1;
+                        addTitleRow = false;
+                    }
+                });
         } while (remainingRecs > 0);
     } catch (error) {
         core.setFailed(error.message);
@@ -109,4 +133,4 @@ async function run(org_Name, csv_path) {
 console.log(`preamble: org name: ${org_Name} `);
 
 // run the action code
-run(org_Name, csv_path);
+run(org_Name, file_path);

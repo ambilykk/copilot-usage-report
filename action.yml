@@ -1,5 +1,5 @@
 name: 'Copilot Usage Report'
-description: 'Export Copilot usage for an Organization to CSV'
+description: 'Export Copilot usage for an Organization to CSV or JSON'
 branding:
   icon: 'download'
   color: 'blue'
@@ -10,8 +10,8 @@ inputs:
   org_name: 
     description: 'Organization name'
     required: true
-  csv_path:
-    description: 'CSV File path'
+  file_path:
+    description: ' or JSON File path'
     required: true
 runs:
   using: 'node16'
