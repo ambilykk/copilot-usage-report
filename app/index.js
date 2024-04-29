@@ -116,14 +116,15 @@ async function run(org_Name, file_path) {
                         jsonData = jsonData.concat(seatsData);
                         fs.writeFileSync(file_path, JSON.stringify(jsonData, null, 2));
                     }
-                    // pagination to get next page data
-                    remainingRecs = remainingRecs - seatsData.length;
-                    console.log('Remaining Records ' + remainingRecs);
-                    if (remainingRecs > 0) {
-                        pageNo = pageNo + 1;
-                        addTitleRow = false;
-                    }
-                });
+                }
+                // pagination to get next page data
+                remainingRecs = remainingRecs - seatsData.length;
+                console.log('Remaining Records ' + remainingRecs);
+                if (remainingRecs > 0) {
+                    pageNo = pageNo + 1;
+                    addTitleRow = false;
+                }
+            });
         } while (remainingRecs > 0);
     } catch (error) {
         core.setFailed(error.message);
