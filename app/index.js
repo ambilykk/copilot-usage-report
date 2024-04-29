@@ -81,14 +81,14 @@ async function run(org_Name, file_path) {
             await getUsage(org_Name, pageNo).then(usageResult => {
                 let seatsData = usageResult.data.seats;
 
+                if (addTitleRow) {
+                    totalSeats = usageResult.data.total_seats;
+                    console.log('Seat Count ' + totalSeats);
+                    remainingRecs = totalSeats;
+                }
+
                 // check whether the file extension is csv or not
                 if (file_path.endsWith('.csv')) {
-
-                    if (addTitleRow) {
-                        totalSeats = usageResult.data.total_seats;
-                        console.log('Seat Count ' + totalSeats);
-                        remainingRecs = totalSeats;
-                    }
 
                     // ALERT! - create our updated opts
                     const opts = { fields, "header": addTitleRow };
