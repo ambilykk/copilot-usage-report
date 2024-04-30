@@ -76,6 +76,9 @@ async function run(org_Name, file_path) {
 
     try {
         await makeDir(dirname(file_path));
+        if (fs.existsSync(file_path)) {
+            fs.writeFileSync(file_path, '');
+        }
         do {
             // invoke the graphql query execution
             await getUsage(org_Name, pageNo).then(usageResult => {
