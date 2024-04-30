@@ -76,8 +76,9 @@ async function run(org_Name, file_path) {
 
     try {
         await makeDir(dirname(file_path));
+        //delete the file, if exists
         if (fs.existsSync(file_path)) {
-            fs.writeFileSync(file_path, '');
+            fs.unlinkSync(file_path);
         }
         do {
             // invoke the graphql query execution
