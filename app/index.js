@@ -33,11 +33,11 @@ const fields = [
         value: 'updated_at'
     },
     {
-        label: 'Last Acivity At',
+        label: 'Last Activity At',
         value: 'last_activity_at'
     },
     {
-        label: 'Last Acivity Editor',
+        label: 'Last Activity Editor',
         value: 'last_activity_editor'
     },
     {
