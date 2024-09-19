@@ -11,8 +11,8 @@ inputs:
     description: 'Organization name'
     required: true
   file_path:
-    description: ' or JSON File path'
+    description: 'CSV or JSON File path'
     required: true
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'app/index.js'
