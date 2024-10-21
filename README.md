@@ -84,8 +84,8 @@ Following fields are included in the Copilot Usage Report
 - User
 - Created At
 - Updated At
-- Last Acivity At
-- Last Acivity Editor
+- Last Activity At
+- Last Activity Editor
 - Pending Cancellation Date
 - Team
 
